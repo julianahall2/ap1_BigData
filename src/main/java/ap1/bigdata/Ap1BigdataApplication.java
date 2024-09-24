@@ -1,4 +1,4 @@
-package ap1.bigdata.ap1_bigdata;
+package ap1.bigdata;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
