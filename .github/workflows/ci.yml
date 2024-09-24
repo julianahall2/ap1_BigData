@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: List project files
-      run: ls -C:\Users\jujua\ap1_BigData
+      run: ls -la 
     - name: Build with Maven
       run: mvn -B compile --file pom.xml
       
