@@ -1,20 +1,14 @@
 package ap1.bigdata.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
 
 @Data
+@Entity
 public class Cliente {
 
     @Id
@@ -26,22 +20,20 @@ public class Cliente {
     @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     private String nome;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Campo cpf não pode ser vazio")
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Campo CPF não pode ser vazio")
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "Formato de CPF inválido")
-    @Column(unique = true)
     private String cpf;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotBlank(message = "Campo e-mail não pode ser vazio")
-    @Email(message = "Formato de email inválido")
-    @Column(unique = true)
-    private String email; 
+    @Email(message = "Formato de e-mail inválido")
+    private String email;
 
     @Column(nullable = false)
-    private LocalDateTime DataNasc;
+    private LocalDate dataNasc;
 
-    @Column(nullable = false)
+    @Column
     @Pattern(
         regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}", 
         message = "O telefone deve estar no formato (XX) XXXXX-XXXX."
