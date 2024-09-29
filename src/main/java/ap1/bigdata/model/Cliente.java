@@ -1,23 +1,12 @@
 package ap1.bigdata.model;
 
-import java.time.LocalDate;
-import java.time.Period;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.*;
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
 
 @Data
 @Entity
@@ -43,13 +32,7 @@ public class Cliente {
     private String email;
 
     @Column(nullable = false)
-    private LocalDate dataNasc;
-
-    @AssertTrue(message = "Cliente deve ter pelo menos 18 anos")
-    public boolean isAdult() {
-    return Period.between(this.dataNasc, LocalDate.now()).getYears() >= 18;
-    }
-
+    private LocalDateTime dataNasc;
 
     @Column
     @Pattern(
