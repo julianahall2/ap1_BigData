@@ -1,4 +1,4 @@
-package main.java.ap1.bigdata.model;
+package ap1.bigdata.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -41,6 +41,4 @@ public class Endereco {
     @Pattern(regexp = "\\d{5}-\\d{3}", message = "Formato de CEP inválido")
     private String cep;
 
-    @ManyToOne
-    private Cliente cliente;
 }

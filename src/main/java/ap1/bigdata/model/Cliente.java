@@ -1,4 +1,4 @@
-package main.java.ap1.bigdata.model;
+package ap1.bigdata.model;
 
 import java.time.LocalDate;
 import java.time.Period;
