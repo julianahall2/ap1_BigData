@@ -1,4 +1,4 @@
-package ap1.bigdata;
+package ap1.bigdata.model;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,6 +7,17 @@ import java.util.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 
 @Data
 @Entity
