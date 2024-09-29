@@ -42,7 +42,18 @@ public class ClienteController {
 
     // Cria um novo cliente
     @PostMapping
-    public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity<Object> create(@Valid @RequestBody Cliente cliente) {
+        // Verifica se o CPF já está cadastrado
+        if (clienteRepository.existsByCpf(cliente.getCpf())) {
+            return new ResponseEntity<>("CPF já cadastrado", HttpStatus.BAD_REQUEST);
+        }
+
+        // Verifica se o e-mail já está cadastrado
+        if (clienteRepository.existsByEmail(cliente.getEmail())) {
+            return new ResponseEntity<>("E-mail já cadastrado", HttpStatus.BAD_REQUEST);
+        }
+
+        // Salva o cliente se não houver duplicidade
         this.clienteRepository.save(cliente);
         return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }

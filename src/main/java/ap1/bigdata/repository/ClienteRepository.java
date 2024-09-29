@@ -6,6 +6,9 @@ import ap1.bigdata.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
+    boolean existsByCpf(String cpf);
+    boolean existsByEmail(String email);
+
 
 }
 

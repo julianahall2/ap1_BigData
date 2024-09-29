@@ -1,6 +1,7 @@
-package ap1.bigdata.model;
+package main.java.ap1.bigdata.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -32,6 +33,12 @@ public class Cliente {
 
     @Column(nullable = false)
     private LocalDate dataNasc;
+
+    @AssertTrue(message = "Cliente deve ter pelo menos 18 anos")
+    public boolean isAdult() {
+    return Period.between(this.dataNasc, LocalDate.now()).getYears() >= 18;
+    }
+
 
     @Column
     @Pattern(

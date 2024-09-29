@@ -1,4 +1,4 @@
-package ap1.bigdata.model;
+package main.java.ap1.bigdata.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
