@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,47 +24,55 @@ import jakarta.validation.Valid;
 public class ClienteController {
     
     @Autowired
-    private ClienteRepository postRepository;
+    private ClienteRepository clienteRepository;
 
+    // Busca todos os clientes
     @GetMapping
     public ResponseEntity<List<Cliente>> getAll() {
-        return new ResponseEntity<>(postRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.OK);
     }
 
+    // Busca um cliente por ID
     @GetMapping("{id}")
     public ResponseEntity<Cliente> getById(@PathVariable("id") int id) {
-        /*Optional<Post> postOptional = this.postRepository.findById(id);
-
-        if (postOptional.isPresent() == false)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        
-        return new ResponseEntity<>(postOptional.get(), HttpStatus.NOT_FOUND);*/
-
-        return this.postRepository.findById(id)
-                                  .map(post -> new ResponseEntity<>(post, HttpStatus.OK))
-                                  .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-
-
+        return this.clienteRepository.findById(id)
+                                     .map(cliente -> new ResponseEntity<>(cliente, HttpStatus.OK))
+                                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // Cria um novo cliente
     @PostMapping
     public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente) {
-        this.postRepository.save(cliente);
+        this.clienteRepository.save(cliente);
         return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") int id) {
-        
-        Optional<Cliente> optPost = this.postRepository.findById(id);
-
-        if (optPost.isPresent() == false)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        
-        this.postRepository.delete(optPost.get());
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    // Atualiza um cliente existente
+    @PutMapping("{id}")
+    public ResponseEntity<Cliente> update(@PathVariable("id") int id, @Valid @RequestBody Cliente clienteAtualizado) {
+        return this.clienteRepository.findById(id)
+                                     .map(cliente -> {
+                                         cliente.setNome(clienteAtualizado.getNome());
+                                         cliente.setCpf(clienteAtualizado.getCpf());
+                                         cliente.setEmail(clienteAtualizado.getEmail());
+                                         cliente.setDataNasc(clienteAtualizado.getDataNasc());
+                                         cliente.setTelefone(clienteAtualizado.getTelefone());
+                                         clienteRepository.save(cliente);
+                                         return new ResponseEntity<>(cliente, HttpStatus.OK);
+                                     })
+                                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    
+    // Deleta um cliente por ID
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
+        Optional<Cliente> clienteOpt = this.clienteRepository.findById(id);
+
+        if (clienteOpt.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        this.clienteRepository.delete(clienteOpt.get());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
