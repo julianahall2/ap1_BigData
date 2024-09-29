@@ -9,6 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 
 @Data
 public class Cliente {
@@ -17,27 +21,27 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank(message = "Campo nome não pode ser vazio")
     @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     private String nome;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank(message = "Campo cpf não pode ser vazio")
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "Formato de CPF inválido")
     @Column(unique = true)
     private String cpf;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank(message = "Campo e-mail não pode ser vazio")
     @Email(message = "Formato de email inválido")
     @Column(unique = true)
     private String email; 
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime DataNasc;
 
-    @Column
+    @Column(nullable = false)
     @Pattern(
         regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}", 
         message = "O telefone deve estar no formato (XX) XXXXX-XXXX."
